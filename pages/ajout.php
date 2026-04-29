@@ -600,7 +600,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="checkbox" name="remarquable" id="remarquable"
                                        <?= isset($_POST['remarquable']) ? 'checked' : '' ?>>
                                 <span>Cocher si cet arbre est classé remarquable</span>
-                                <span class="rq-badge">Remarquable</span>
                             </label>
                         </div>
 

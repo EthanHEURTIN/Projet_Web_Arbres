@@ -479,7 +479,7 @@ try {
             <div class="info-card">
                 <div class="info-card-header">
                     <i class="fas fa-seedling"></i>
-                    <span>Notre approche IA</span>
+                    <span>Notre Logo</span>
                 </div>
                 <div class="info-card-body">
                     <div class="home-logo-wrap">
