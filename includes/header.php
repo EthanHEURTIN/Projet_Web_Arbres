@@ -93,13 +93,16 @@
             <nav class="ms-4 d-none d-lg-block">
                 <ul class="nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?url=accueil"><i class="fas fa-home"></i>Accueil</a>
+                        <a class="nav-link" href="accueil"><i class="fas fa-home"></i>Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?url=visualisation"><i class="fas fa-tree"></i>Visualisation</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?url=ajout"><i class="fas fa-plus-circle"></i>Ajout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="predire_age"><i class="fas fa-brain"></i>Prédire âge</a>
                     </li>
                 </ul>
             </nav>
