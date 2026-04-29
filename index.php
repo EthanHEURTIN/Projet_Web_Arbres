@@ -26,6 +26,9 @@ switch ($url) {
     case 'predire_age':
         include 'pages/predire_age.php';
         break;
+    case 'ajout':
+        include 'pages/ajout.php';
+        break;
     default:
         echo "<h1>404 - Page non trouvée</h1>";
         break;

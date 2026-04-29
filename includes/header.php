@@ -7,6 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -29,7 +30,7 @@
         }
 
         .logo-box img {
-            height: 85px; /* On profite de la hauteur car c'est un rond */
+            height: 85px;
             width: auto;
             transition: transform 0.3s ease;
         }
@@ -46,13 +47,67 @@
 
         .nav-link i {
             margin-right: 8px;
-            color: #8dbb8d; /* Vert clair pour les icônes */
+            color: #8dbb8d;
         }
 
-        .nav-link:hover {
+        .nav-link:hover,
+        .nav-link:focus {
             color: #fff !important;
             background: rgba(255,255,255,0.1);
             border-radius: 8px;
+        }
+
+        /* Flèche du dropdown personnalisée */
+        .nav-link.dropdown-toggle::after {
+            border: none;
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.75rem;
+            vertical-align: middle;
+            margin-left: 4px;
+            color: #8dbb8d;
+            transition: transform 0.2s;
+        }
+        .nav-link.dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+
+        /* Menu déroulant */
+        .pred-dropdown {
+            background: linear-gradient(160deg, #004d00, #002b00);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            padding: 6px;
+            min-width: 160px;
+            margin-top: 6px !important;
+        }
+
+        .pred-dropdown-item {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.85) !important;
+            border-radius: 8px;
+            padding: 9px 14px !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .pred-dropdown-item i {
+            color: #8dbb8d;
+            font-size: 0.85rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .pred-dropdown-item:hover {
+            background: rgba(255,255,255,0.12) !important;
+            color: #fff !important;
         }
 
         /* Barre de recherche personnalisée */
@@ -99,17 +154,34 @@
                         <a class="nav-link" href="index.php?url=visualisation"><i class="fas fa-tree"></i>Visualisation</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?url=ajout"><i class="fas fa-plus-circle"></i>Ajout</a>
+                        <a class="nav-link" href="ajout"><i class="fas fa-plus-circle"></i>Ajout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="predire_age"><i class="fas fa-brain"></i>Prédire âge</a>
+
+                    <!-- Dropdown Prédiction -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-brain"></i>Prédiction
+                        </a>
+                        <ul class="dropdown-menu pred-dropdown">
+                            <li>
+                                <a class="dropdown-item pred-dropdown-item" href="predire_age">
+                                    <i class="fas fa-seedling"></i>Âge
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item pred-dropdown-item" href="predire_cluster">
+                                    <i class="fas fa-layer-group"></i>Cluster
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
                 </ul>
             </nav>
         </div>
 
         <div class="d-flex align-items-center pe-4 gap-3">
-            
             <a href="index.php?url=admin" class="btn btn-outline-light btn-sm px-3 rounded-pill">
                 <i class="fas fa-user-shield me-2"></i>Admin
             </a>
