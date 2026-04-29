@@ -4,7 +4,7 @@ try {
     $tailleMoyenne = round($pdo->query("SELECT AVG(haut_tot) FROM arbre")->fetchColumn(), 2);
     $ageMoyen      = round($pdo->query("SELECT AVG(age_estim) FROM arbre")->fetchColumn(), 1);
     $risque        = $pdo->query("SELECT COUNT(*) FROM arbre WHERE fk_stade_dev IN ('vieux', 'senescent')")->fetchColumn();
-    $remarquables  = $pdo->query("SELECT COUNT(*) FROM arbre WHERE remarquable = 1")->fetchColumn();
+    $remarquables  = $pdo->query("SELECT COUNT(*) FROM arbre WHERE remarquable = 'Oui'")->fetchColumn();
 } catch (Exception $e) {
     $total = $tailleMoyenne = $ageMoyen = $risque = $remarquables = "N/A";
 }
