@@ -179,12 +179,5 @@
                 </ul>
             </nav>
         </div>
-
-        <div class="d-flex align-items-center pe-4 gap-3">
-            <a href="index.php?url=admin" class="btn btn-outline-light btn-sm px-3 rounded-pill">
-                <i class="fas fa-user-shield me-2"></i>Admin
-            </a>
-        </div>
-        
     </div>
 </header>
