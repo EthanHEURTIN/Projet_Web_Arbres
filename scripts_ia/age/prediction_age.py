@@ -1,0 +1,43 @@
+import joblib
+import pandas as pd
+import argparse
+import os
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+# CONFIGURATION DES ARGUMENTS
+parser = argparse.ArgumentParser(description="🌳 Prédiction de l'âge d'un arbre")
+parser.add_argument('--tronc_diam', type=float, required=True, help="Diamètre du tronc (en mètres)")
+parser.add_argument('--haut_tot', type=float, required=True, help="Hauteur totale de l'arbre (en mètres)")
+parser.add_argument('--haut_tronc', type=float, required=True, help="Hauteur du tronc (en mètres)")
+parser.add_argument('--fk_stadedev',type=str, required=True, help="Stade de développement (ex: jeune, adulte, vieux, senescent)")
+parser.add_argument('--nom', type=str, required=True, help="Nom de l'espèce (ex: ACERUB, PLATAL, etc.)")
+parser.add_argument('--clc_quartier', type=str, required=True, help="Nom exact du quartier")
+parser.add_argument('--clc_secteur', type=str, required=True, help="Nom exact du secteur")
+parser.add_argument('--clc_nbr_diag', type=int, required=True, help="Nombre de diagnostics")
+
+args = parser.parse_args()
+
+# CHARGEMENT DU MODÈLE
+print("🔄 Chargement du modèle...")
+model = joblib.load('modele_arbre.pkl')
+print("✅ Modèle chargé avec succès !\n")
+
+# CRÉATION DU DATAFRAME
+nouveau_arbre = pd.DataFrame({
+    'tronc_diam': [args.tronc_diam],
+    'haut_tot': [args.haut_tot],
+    'haut_tronc': [args.haut_tronc],
+    'fk_stadedev': [args.fk_stadedev],
+    'nom': [args.nom],
+    'clc_quartier': [args.clc_quartier],
+    'clc_secteur': [args.clc_secteur],
+    'clc_nbr_diag': [args.clc_nbr_diag]
+})
+
+# PRÉDICTION
+print("🔮 Prédiction en cours...")
+prediction = model.predict(nouveau_arbre)
+
+
+print(f"{prediction[0]:.1f}")

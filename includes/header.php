@@ -8,20 +8,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">
-                <img src="logo_arborinfo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
-                Arbor'Info
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="visualisation.php">Visualisation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="ajout.php">Ajout Arbre</a></li>
+
+<header class="container-fluid p-0 sticky-top">
+    <div class="d-flex align-items-center justify-content-between custom-header">
+        
+        <div class="d-flex align-items-center h-100">
+            <div class="logo-box">
+                <img src="assets/img/logo.png" alt="Logo">
+            </div>
+
+            <nav class="ms-4 d-none d-lg-block">
+                <ul class="nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="accueil"><i class="fas fa-home"></i>Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?url=visualisation"><i class="fas fa-tree"></i>Visualisation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?url=ajout"><i class="fas fa-plus-circle"></i>Ajout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="predire_age"><i class="fas fa-brain"></i>Prédire âge</a>
+                    </li>
                 </ul>
             </div>
         </div>
