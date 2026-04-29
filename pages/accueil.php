@@ -374,10 +374,10 @@ try {
         <h1>Gérez vos arbres avec<br><span>l'Intelligence Artificielle</span></h1>
         <p>Analyse prédictive, clustering et suivi en temps réel de plus de 12 000 arbres pour une gestion durable des espaces verts.</p>
         <div class="d-flex flex-wrap gap-3">
-            <a href="index.php?url=visualisation" class="btn-hero-primary">
+            <a href="visualisation" class="btn-hero-primary">
                 <i class="fas fa-map-marked-alt"></i>Voir la carte interactive
             </a>
-            <a href="index.php?url=ajout" class="btn-hero-secondary">
+            <a href="ajout" class="btn-hero-secondary">
                 <i class="fas fa-plus-circle"></i>Ajouter un arbre
             </a>
         </div>
@@ -483,7 +483,7 @@ try {
                 </div>
                 <div class="info-card-body">
                     <div class="home-logo-wrap">
-                        <img src="assets/img/logo_arborinfo.png" alt="Logo Arbor'Info">
+                        <img src="assets/img/logo.png" alt="Logo">
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <?php
 require_once 'includes/db.php';
 
-// Récupère l'URL demandée (ex: /visualisation)
 $url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : 'accueil';
 
 // Inclusion du Header (Bootstrap + Navbar)
