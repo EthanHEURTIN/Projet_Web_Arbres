@@ -52,7 +52,7 @@ try {
 
 <div class="row justify-content-center">
     <div class="col-md-10">
-        <h1 class="prediction-title">Prédiction de l'age</h1>
+        <h1 class="prediction-title">Prédiction de l'âge</h1>
 
         <form action="" method="POST">
             <div class="row g-3">
@@ -130,7 +130,6 @@ try {
         <div class="result-box">
             <?php 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // 1. Récupération des données du formulaire
                     $diametre = $_POST['diametre'] ?? 0;
                     $haut_tot = $_POST['hauteur_totale'] ?? 0;
                     $haut_tronc = $_POST['hauteur_tronc'] ?? 0;
@@ -140,7 +139,6 @@ try {
                     $secteur = $_POST['secteur'] ?? '';
                     $nb_diag = $_POST['nb_diag'] ?? 0;
 
-                    // 2. Chemins vers Python et le Script
                     $python_path = "/var/www/html/arbres/scripts_ia/venv/bin/python3";
                     $script_path = "/var/www/html/arbres/scripts_ia/age/prediction_age.py";
 
@@ -154,7 +152,7 @@ try {
                         "--clc_secteur " . escapeshellarg($secteur) . " " .
                         "--clc_nbr_diag " . intval($nb_diag) . " 2>&1";
 
-                    // 4. Exécution
+
                     $output = shell_exec($cmd);
 
                     if ($output) {
