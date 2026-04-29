@@ -1,12 +1,14 @@
 <?php
 
-// Récupération des arbres
+// Récupération des arbres — date récente en premier, sans date à la fin
 $arbres = $pdo->query("
     SELECT id_arbre, nom, created_date, clc_quartier, clc_secteur,
            haut_tot, haut_tronc, tronc_diam, fk_etat, fk_stade_dev,
-           remarquable, lat, lon
+           lat, lon
     FROM arbre
-    ORDER BY created_date ASC
+    ORDER BY 
+        CASE WHEN created_date IS NULL OR created_date = '' THEN 1 ELSE 0 END ASC,
+        created_date DESC
 ")->fetchAll();
 
 // Carte Python
@@ -29,7 +31,6 @@ if (empty($mapHtml)) {
         --green-light:  #e8f5e8;
     }
 
-    /* ── Hero ── */
     .visu-hero {
         background: linear-gradient(135deg, var(--green-mid) 0%, var(--green-dark) 100%);
         padding: 48px 0 36px;
@@ -75,7 +76,6 @@ if (empty($mapHtml)) {
         flex-shrink: 0;
     }
 
-    /* ── Cards ── */
     .visu-card {
         background: #fff;
         border-radius: 16px;
@@ -109,7 +109,6 @@ if (empty($mapHtml)) {
         letter-spacing: 0.5px;
     }
 
-    /* ── Table ── */
     .visu-table-wrap {
         height: 340px;
         overflow-y: auto;
@@ -151,7 +150,6 @@ if (empty($mapHtml)) {
         border: none;
     }
 
-    /* Badges état */
     .etat-badge {
         font-family: 'Montserrat', sans-serif;
         font-size: 0.68rem;
@@ -167,7 +165,6 @@ if (empty($mapHtml)) {
     .etat-supprime  { background: #f0f0f0; color: #555; }
     .etat-autre     { background: #f0f0f0; color: #888; }
 
-    /* ── Map error ── */
     .map-error {
         font-family: 'Montserrat', sans-serif;
         font-size: 0.78rem;
@@ -180,7 +177,6 @@ if (empty($mapHtml)) {
         line-height: 1.7;
     }
 
-    /* ── Selected tree indicator ── */
     .selected-label {
         font-family: 'Montserrat', sans-serif;
         font-size: 0.75rem;
@@ -190,7 +186,6 @@ if (empty($mapHtml)) {
         margin-left: auto;
     }
 
-    /* ── CTA bottom ── */
     .visu-cta {
         background: #fff;
         border-radius: 16px;
@@ -300,17 +295,16 @@ if (empty($mapHtml)) {
                         <th>Ø tronc</th>
                         <th>État</th>
                         <th>Stade</th>
-                        <th class="text-center">★</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($arbres as $arbre):
                         $etatClass = match($arbre['fk_etat']) {
-                            'EN PLACE'      => 'etat-en-place',
-                            'ABATTU'        => 'etat-abattu',
-                            'REMPLACÉ'      => 'etat-remplace',
-                            'SUPPRIMÉ'      => 'etat-supprime',
-                            default         => 'etat-autre',
+                            'EN PLACE'  => 'etat-en-place',
+                            'ABATTU'    => 'etat-abattu',
+                            'REMPLACÉ'  => 'etat-remplace',
+                            'SUPPRIMÉ'  => 'etat-supprime',
+                            default     => 'etat-autre',
                         };
                     ?>
                         <tr class="arbre-row"
@@ -320,20 +314,19 @@ if (empty($mapHtml)) {
                             data-nom="<?= htmlspecialchars($arbre['nom'] ?? '—') ?>">
                             <td><?= $arbre['id_arbre'] ?></td>
                             <td><?= htmlspecialchars($arbre['nom'] ?? '—') ?></td>
-                            <td><?= $arbre['created_date'] ?? '—' ?></td>
+                            <td>
+                                <?php if (!empty($arbre['created_date'])): ?>
+                                    <?= $arbre['created_date'] ?>
+                                <?php else: ?>
+                                    <span style="color:#ccc; font-style:italic;">—</span>
+                                <?php endif; ?>
+                            </td>
                             <td><?= htmlspecialchars($arbre['clc_quartier']) ?></td>
                             <td><?= htmlspecialchars($arbre['clc_secteur']) ?></td>
                             <td><?= $arbre['haut_tot'] ?></td>
                             <td><?= $arbre['tronc_diam'] ?></td>
                             <td><span class="etat-badge <?= $etatClass ?>"><?= htmlspecialchars($arbre['fk_etat']) ?></span></td>
                             <td><?= htmlspecialchars($arbre['fk_stade_dev']) ?></td>
-                            <td class="text-center">
-                                <?php if ($arbre['remarquable']): ?>
-                                    <i class="fas fa-star" style="color:#d97706; font-size:0.85rem;"></i>
-                                <?php else: ?>
-                                    <i class="far fa-star" style="color:#ddd; font-size:0.85rem;"></i>
-                                <?php endif; ?>
-                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
