@@ -81,7 +81,7 @@ try {
                 </p>
             </div>
         </div>
-        <a href="index.php?url=visualisation&filter=danger" class="btn-danger-action">
+        <a href="visualisation" class="btn-danger-action">
             <i class="fas fa-search-location"></i>Identifier les zones
         </a>
     </div>
