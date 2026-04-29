@@ -20,8 +20,8 @@ switch ($url) {
     case 'visualisation':
         include 'pages/visualisation.php';
         break;
-    case 'prediction':
-        include 'pages/prediction.php';
+    case 'predire_cluster':
+        include 'pages/predire_cluster.php';
         break;
     case 'predire_age':
         include 'pages/predire_age.php';

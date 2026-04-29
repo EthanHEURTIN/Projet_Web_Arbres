@@ -37,7 +37,7 @@ try {
 
 <div class="row align-items-center">
         <div class="col-lg-6">
-            <h2 class="fw-bold text-success mb-3">À propos d'Arbor'Info</h2>
+            <h2 class="fw-bold text-success mb-3">À propos du projet</h2>
             <p class="lead">
                 Ce projet est une Preuve de Concept développée pour la ville de Saint-Quentin, visant à moderniser la gestion de son patrimoine arboré.
             </p>
@@ -51,7 +51,7 @@ try {
             </ul>
         </div>
         <div class="col-lg-6 text-center">
-            <img src="logo_arborinfo.png" alt="Illustration Projet" class="img-fluid rounded-circle shadow-sm" style="max-height: 300px; background-color: #f8f9fa; padding: 20px;">
+            <img src="/assets/img/logo.png" alt="Illustration Projet" class="img-fluid rounded-circle shadow-sm" style="max-height: 300px; background-color: #f8f9fa; padding: 20px;">
         </div>
     </div>
 
