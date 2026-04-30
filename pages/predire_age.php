@@ -30,7 +30,8 @@ try {
 </div>
 
 <div class="container pb-5">
-    <form action="" method="POST">
+    <!-- Le formulaire n'a plus de method/action : géré par fetch() -->
+    <form id="predForm">
         <div class="row g-4 align-items-stretch">
 
             <!-- Colonne gauche : mesures -->
@@ -132,7 +133,7 @@ try {
             <button type="button" class="btn-pred-back" onclick="history.back()">
                 <i class="fas fa-arrow-left me-2"></i>Retour
             </button>
-            <button type="submit" class="btn-pred-submit">
+            <button type="submit" class="btn-pred-submit" id="submitBtn">
                 <i class="fas fa-bolt"></i>Lancer la prédiction
             </button>
         </div>
@@ -144,77 +145,74 @@ try {
             <i class="fas fa-chart-bar"></i>
             <span>Résultat de la prédiction</span>
         </div>
-        <div class="pred-result-body">
-            <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-                $diametre   = $_POST['diametre']       ?? 0;
-                $haut_tot   = $_POST['hauteur_totale'] ?? 0;
-                $haut_tronc = $_POST['hauteur_tronc']  ?? 0;
-                $stade      = $_POST['stade']          ?? '';
-                $espece     = $_POST['espece']         ?? '';
-                $quartier   = $_POST['quartier']       ?? '';
-                $secteur    = $_POST['secteur']        ?? '';
-                $nb_diag    = $_POST['nb_diag']        ?? 0;
-
-                $script_path = __DIR__ . "/../scripts_ia/age/prediction_age.py";
-                $python_path = __DIR__ . "/../scripts_ia/venv/bin/python3";
-
-                $cmd = "$python_path $script_path "
-                    . "--tronc_diam "   . floatval($diametre)       . " "
-                    . "--haut_tot "     . floatval($haut_tot)       . " "
-                    . "--haut_tronc "   . floatval($haut_tronc)     . " "
-                    . "--fk_stadedev "  . escapeshellarg($stade)    . " "
-                    . "--nom "          . escapeshellarg($espece)   . " "
-                    . "--clc_quartier " . escapeshellarg($quartier) . " "
-                    . "--clc_secteur "  . escapeshellarg($secteur)  . " "
-                    . "--clc_nbr_diag " . intval($nb_diag)
-                    . " 2>/dev/null";
-
-                $output = shell_exec($cmd);
-
-                if ($output !== null && trim($output) !== '') {
-                    $resultat = trim($output);
-                    if (is_numeric($resultat)) {
-                        echo '
-                        <div class="pred-success">
-                            <i class="fas fa-tree age-icon"></i>
-                            <div class="age-badge">
-                                <span class="age-number">' . htmlspecialchars($resultat) . '</span>
-                                <span class="age-unit">ans</span>
-                            </div>
-                            <p class="age-label">Âge estimé par le modèle IA</p>
-                        </div>';
-                    } else {
-                        echo '<div class="pred-error"><i class="fas fa-exclamation-triangle"></i>'
-                            . nl2br(htmlspecialchars($output)) . '</div>';
-                    }
-                } else {
-                    $cmd_debug = "$python_path $script_path "
-                        . "--tronc_diam "   . floatval($diametre)       . " "
-                        . "--haut_tot "     . floatval($haut_tot)       . " "
-                        . "--haut_tronc "   . floatval($haut_tronc)     . " "
-                        . "--fk_stadedev "  . escapeshellarg($stade)    . " "
-                        . "--nom "          . escapeshellarg($espece)   . " "
-                        . "--clc_quartier " . escapeshellarg($quartier) . " "
-                        . "--clc_secteur "  . escapeshellarg($secteur)  . " "
-                        . "--clc_nbr_diag " . intval($nb_diag)
-                        . " 2>&1 1>/dev/null";
-                    $error = shell_exec($cmd_debug);
-                    echo '<div class="pred-error"><i class="fas fa-exclamation-triangle"></i>'
-                        . nl2br(htmlspecialchars($error ?: "Erreur inconnue — aucune sortie reçue."))
-                        . '</div>';
-                }
-
-            } else {
-                echo '
-                <div class="pred-waiting">
-                    <i class="fas fa-tree"></i>
-                    <p>Remplissez le formulaire et lancez la prédiction</p>
-                </div>';
-            }
-            ?>
+        <div class="pred-result-body" id="resultBox">
+            <div class="pred-waiting">
+                <i class="fas fa-tree"></i>
+                <p>Remplissez le formulaire et lancez la prédiction</p>
+            </div>
         </div>
     </div>
 
 </div>
+
+<script>
+document.getElementById('predForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); // Empêche le rechargement de page
+
+    const submitBtn = document.getElementById('submitBtn');
+    const resultBox = document.getElementById('resultBox');
+
+    // État chargement
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calcul en cours...';
+    resultBox.innerHTML = `
+        <div class="pred-waiting">
+            <i class="fas fa-spinner fa-spin" style="font-size:2rem; color:#8dbb8d;"></i>
+            <p style="margin-top:12px;">Prédiction en cours...</p>
+        </div>`;
+
+    try {
+        const formData = new FormData(this);
+
+        const response = await fetch('index.php?url=ajax_predire_age', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            resultBox.innerHTML = `
+                <div class="pred-success">
+                    <i class="fas fa-tree age-icon"></i>
+                    <div class="age-badge">
+                        <span class="age-number">${data.age}</span>
+                        <span class="age-unit">ans</span>
+                    </div>
+                    <p class="age-label">Âge estimé par le modèle IA</p>
+                </div>`;
+        } else {
+            resultBox.innerHTML = `
+                <div class="pred-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    ${data.error.replace(/\n/g, '<br>')}
+                </div>`;
+        }
+
+    } catch (err) {
+        resultBox.innerHTML = `
+            <div class="pred-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                Erreur réseau : ${err.message}
+            </div>`;
+    } finally {
+        // Restaure le bouton dans tous les cas
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-bolt"></i>Lancer la prédiction';
+    }
+});
+</script>
