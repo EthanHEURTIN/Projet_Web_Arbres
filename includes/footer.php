@@ -190,9 +190,6 @@
             <p class="copy">
                 © <?= date('Y') ?> <span>Ville de Saint-Quentin</span> — Tous droits réservés
             </p>
-            <p class="made-by">
-                Fait avec <i class="fas fa-heart"></i> dans le cadre d'un projet Big Data & IA
-            </p>
         </div>
     </div>
 </footer>
