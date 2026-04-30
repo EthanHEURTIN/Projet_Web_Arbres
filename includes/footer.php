@@ -159,7 +159,6 @@
                     <li><a href="ajout"><i class="fas fa-plus-circle"></i>Ajouter un arbre</a></li>
                     <li><a href="predire_age"><i class="fas fa-brain"></i>Prédiction de l'âge</a></li>
                     <li><a href="predire_cluster"><i class="fas fa-layer-group"></i>Prédiction cluster</a></li>
-                    <li><a href="admin"><i class="fas fa-user-shield"></i>Administration</a></li>
                 </ul>
             </div>
 

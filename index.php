@@ -3,14 +3,8 @@ require_once 'includes/db.php';
 
 $url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : 'accueil';
 
-// ── Routes AJAX : répondent directement, sans header ni footer ──
 if ($url === 'ajax_predire_age') {
     require 'pages/ajax_predire_age.php';
-    exit;
-}
-
-if ($url === 'ajax_predire_cluster') {
-    require 'pages/ajax_predire_cluster.php';
     exit;
 }
 
